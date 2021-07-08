@@ -1,0 +1,23 @@
+{
+  "name": "questions-answers-API",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SDC-Cantaloupe/questions-answers-API.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/SDC-Cantaloupe/questions-answers-API/issues"
+  },
+  "homepage": "https://github.com/SDC-Cantaloupe/questions-answers-API#readme",
+  "devDependencies": {
+    "jest": "^27.0.6"
+  }
+}
