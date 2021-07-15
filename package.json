@@ -19,5 +19,8 @@
   "homepage": "https://github.com/SDC-Cantaloupe/questions-answers-API#readme",
   "devDependencies": {
     "jest": "^27.0.6"
+  },
+  "dependencies": {
+    "mongoose": "^5.13.2"
   }
 }
