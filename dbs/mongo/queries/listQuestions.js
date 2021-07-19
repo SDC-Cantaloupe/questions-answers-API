@@ -11,7 +11,6 @@ const listQuestions = () => {
   //needs to ignore reported questions
   //needs page input default 1,
   //needs count input default 5
-
 }
 
 module.exports = {
