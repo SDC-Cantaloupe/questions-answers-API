@@ -39,3 +39,6 @@ ALTER TABLE answers_photos ADD FOREIGN KEY (answer_id) REFERENCES answers (answe
 -- \copy questions from 'questions.csv' delimiter ',' csv header;
 -- \copy answers from 'answers.csv' delimiter ',' csv header;
 -- \copy answers_photos from 'answers_photos.csv' delimiter ',' csv header;
+
+--will have to make new column, move data, and rename
+--update questions set question_date = to_char(to_timestamp(big_date/1000),'YYYY-MM-DD"T"HH24:MI:SS"Z"');
