@@ -45,9 +45,12 @@ app.post('/qa/questions', (req,res) => {
   let body = query.body;
   let name = query.name;
   let email = query.email;
-  let product_id = query.product_id;
+  let p_id = query.product_id;
 
-  db.addNewQuestion
+  console.log('this is the query', query)
+
+  db.addNewQuestion(p_id, name, email, body)
+  .then(data => res.send(data))
 })
 
 app.post('/qa/questions/[questionid]/answers')

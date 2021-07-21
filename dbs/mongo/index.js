@@ -16,7 +16,7 @@ const getAllQuestions = (p_id, page = 1, count = 5) => {
 }
 
 const addNewQuestion = (p_id, name, email, body) => {
-  return addQuestion(...args)
+  return addQuestion(p_id, name, email, body)
 }
 
 module.exports = {
