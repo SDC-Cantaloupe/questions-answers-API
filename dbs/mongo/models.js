@@ -17,7 +17,7 @@ const answerSchema = new mongoose.Schema({
   answer_id: Number,
   question_id: Number,
   body: String,
-  date: Number,
+  date: String,
   answerer_name: String,
   answerer_email: String,
   reported: Number,
