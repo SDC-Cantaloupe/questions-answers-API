@@ -13,33 +13,16 @@ ROUTES
 */
 
 app.get('/qa/questions', (req,res) => {
+  let query = req.query;
 
-  db.getAllQuestions()
+  let p_id = query.product_id
+  let page = 1;
+  let count = 1;
+
+  db.getAllQuestions(p_id, page, count)
   .then(data => {
     res.send(data)
   })
-
-
-
-  // db.getQuestions(p_id = 1, page = 1, count = 5)
-  // .then(questions => {
-  //   let answers = [];
-  //   questions.forEach(question => {
-  //     let q_id = question.question_id;
-  //     answers.push(db.getAnswersToQuestion(q_id,page=1, count = 5))
-
-  //     return Promise.all(answers)
-  //   })
-  //   .then(answers => {
-  //     let results = [];
-
-  //     for (let i = 0 ; i < answers.length; i++) {
-  //       questions[i]['answers'] = answers[i];
-
-  //       results.push(questions[i])
-  //     }
-  //     res.send(results)
-  //   })
   })
 
 
