@@ -14,14 +14,20 @@ ROUTES
 
 app.get('/qa/questions', (req,res) => {
   let query = req.query;
-
+console.log('query', query)
   let p_id = query.product_id
   let page = 1;
-  let count = 1;
+  let count = Number(query.count);
+
+  console.log('route count', count)
 
   db.getAllQuestions(p_id, page, count)
   .then(data => {
     res.send(data)
+  })
+  .catch(err => {
+    console.log('error querying db', err)
+    res.send(500)
   })
   })
 

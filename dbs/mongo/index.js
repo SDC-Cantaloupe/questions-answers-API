@@ -9,7 +9,8 @@ const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'))
 db.once('open', () => {console.log('Connnectedto QA DB')})
 
-const getAllQuestions = (p_id, page, count) => {
+const getAllQuestions = (p_id, page = 1, count = 5) => {
+  console.log('db index', p_id, page, count)
   return getQuestionData(p_id, page, count);
 }
 

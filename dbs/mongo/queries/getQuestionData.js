@@ -1,11 +1,12 @@
 const mongoose = require('mongoose');
 const {Questions, Answers, Answer_Photos} = require('../models.js');
 
-async function getQuestionData(p_id, page = 1, count = 5) {
-  let questions = await Questions.find({product_id:p_id}, {_id: 0}).limit(2);
+async function getQuestionData(p_id, page, count) {
+  console.log('limit', count, 'p_id', p_id)
+  let questions = await Questions.find({product_id:p_id}, {_id: 0}).limit(count);
 
   let answers = await Promise.all(questions.map(async (question) => {
-    let answer = await Answers.find({question_id: question.question_id}, {_id: 0}).limit(2);
+    let answer = await Answers.find({question_id: question.question_id}, {_id: 0}).limit(count);
     return answer
   }))
 
@@ -46,7 +47,6 @@ async function getQuestionData(p_id, page = 1, count = 5) {
     questionResult.answers = answersObj;
 
     Object.values(questionResult.answers).forEach((id, index) => {
-      console.log('dataa', id,i)
       let answer = id;
       answer.photos = answerPhotos[i][index]
     })
