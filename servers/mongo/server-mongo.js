@@ -14,7 +14,6 @@ ROUTES
 
 app.get('/qa/questions', (req,res) => {
   let query = req.query;
-console.log('query', query)
   let p_id = query.product_id
   let page = 1;
   let count = Number(query.count);
@@ -40,7 +39,16 @@ console.log('query', query)
 
 app.get('/qa/questions/[questionid]/answers')
 
-app.post('/qa/questions')
+app.post('/qa/questions', (req,res) => {
+  let query = req.query;
+
+  let body = query.body;
+  let name = query.name;
+  let email = query.email;
+  let product_id = query.product_id;
+
+  db.addNewQuestion
+})
 
 app.post('/qa/questions/[questionid]/answers')
 

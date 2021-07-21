@@ -1,15 +1,13 @@
-const mongoose = require('mongoose');
 const {Questions, Answers, Answer_Photos} = require('../models.js');
 
 async function getQuestionData(p_id, page, count) {
   console.log('limit', count, 'p_id', p_id)
-  let questions = await Questions.find({product_id:p_id}, {_id: 0}).limit(count);
+  let questions = await Questions.find({product_id:p_id, reported: false}, {_id: 0}).limit(count);
 
   let answers = await Promise.all(questions.map(async (question) => {
-    let answer = await Answers.find({question_id: question.question_id}, {_id: 0}).limit(count);
+    let answer = await Answers.find({question_id: question.question_id, reported: false}, {_id: 0}).limit(count);
     return answer
   }))
-
 
   let answerPhotos = await Promise.all(answers.map(async (answerGroup) => {
     let photos = await Promise.all(answerGroup.map(async (answer) => {
@@ -27,7 +25,6 @@ async function getQuestionData(p_id, page, count) {
   for ( let i = 0; i < answers.length; i++) {
     let questionResult = {...questions[i]}._doc
 
-    delete questionResult.reported;
     delete questionResult.product_id;
     delete questionResult.asker_email;
 
