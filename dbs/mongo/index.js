@@ -12,11 +12,18 @@ db.once('open', () => {console.log('Connnectedto QA DB')})
 async function getAllQuestions(p_id, page, count) {
   let questions = await Questions.find({product_id:1}).limit(5);
 
-
-
   let answers = await Promise.all(questions.map(async (question) => {
     let answer = await Answers.find({question_id: question.question_id}).limit(5);
     return answer
+  }))
+
+
+  let answerPhotos = await Promise.all(answers.map(async (answerGroup) => {
+    let photos = await Promise.all(answerGroup.map(async (answer) => {
+      let photo =  await Answer_Photos.find({answer_id: answer.answer_id})
+      return photo
+    }));
+    return photos
   }))
 
   let result = {
@@ -25,18 +32,19 @@ async function getAllQuestions(p_id, page, count) {
   }
 
   for ( let i = 0; i < answers.length; i++) {
-    let x = Object.assign({}, questions[i])._doc
+    let questionResult = {...questions[i]}._doc
 
-    x.answers = answers[i]
+    questionResult.answers = answers[i]
 
+    questionResult.answers.map((result,j) => {
+      let resultWithPhotos = {...result}._doc;
 
-    result.results.push(x)
+      resultWithPhotos.photos = answerPhotos[i][j];
+    })
+    result.results.push(questionResult)
   }
-
-
   return result
 }
-
 
 module.exports = {
   getAllQuestions
