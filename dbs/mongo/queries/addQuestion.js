@@ -7,7 +7,7 @@ async function addQuestion(p_id, name, email, body){
   let q_id =  findHighestQ_ID[0].question_id + 1;
   console.log(q_id)
 
-  let document = {
+  let doc = new Questions({
     question_id: q_id,
     product_id: p_id,
     question_body: body,
@@ -16,12 +16,12 @@ async function addQuestion(p_id, name, email, body){
     asker_email: email,
     reported: 0,
     question_helpfulness: 0
-  }
+  })
 
-  console.log('Document saved',document)
+  //console.log('Document saved',document)
 
-  await Questions.create(document).then(console.log('saved document!!!'))
-  return `saved ${document}`
+  await doc.save()
+  return `saved document`
 }
 
 module.exports = {

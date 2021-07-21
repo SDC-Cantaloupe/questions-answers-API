@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "jest --coverage",
+    "test": "jest --coverage --detectOpenHandles",
     "start": "node dbs/mongo/index.js"
   },
   "repository": {
@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/SDC-Cantaloupe/questions-answers-API#readme",
   "devDependencies": {
+    "@shelf/jest-mongodb": "^2.0.1",
     "jest": "^27.0.6"
   },
   "dependencies": {
