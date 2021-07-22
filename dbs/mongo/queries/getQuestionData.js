@@ -1,4 +1,5 @@
 const {Questions, Answers, Answer_Photos} = require('../models.js');
+const {formatResponse} = require('../controllers/questionResponse.js');
 
 async function getQuestionData(p_id, page, count) {
   console.log('limit', count, 'p_id', p_id)
@@ -17,40 +18,7 @@ async function getQuestionData(p_id, page, count) {
     return photos
   }))
 
-  let result = {
-    'product_id': p_id,
-    'results': []
-  }
-
-  for ( let i = 0; i < answers.length; i++) {
-    let questionResult = {...questions[i]}._doc
-
-    delete questionResult.product_id;
-    delete questionResult.asker_email;
-
-    let answersObj = {};
-
-    answers[i].map(answer => {
-      let answerResult = {...answer}._doc;
-      answerResult.id = answerResult.answer_id;
-      delete answerResult.answer_id;
-      delete answerResult.question_id;
-      delete answerResult.answerer_email;
-      delete answerResult.reported;
-
-      answersObj[answerResult.id] = answerResult
-    })
-
-    questionResult.answers = answersObj;
-
-    Object.values(questionResult.answers).forEach((id, index) => {
-      let answer = id;
-      answer.photos = answerPhotos[i][index]
-    })
-
-    result.results.push(questionResult)
-  }
-  return result
+  return formatResponse(p_id, questions, answers, answerPhotos)
 }
 
 module.exports = {
