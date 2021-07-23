@@ -3,6 +3,7 @@ const {Questions, Answers, Answer_Photos} = require('./models.js');
 const {getQuestionData} = require('./queries/getQuestionData.js')
 const {addQuestion} = require('./queries/addQuestion.js')
 const {getAnswerData} = require('./queries/getAnswerData.js')
+const {addAnswer} = require('./queries/addAnswer.js')
 
 
 mongoose.connect('mongodb://localhost/qa', {useNewUrlParser: true, useUnifiedTopology: true});
@@ -20,12 +21,17 @@ const getAnswers = (q_id, page = 1, count = 5) => {
   return getAnswerData(q_id, page, count)
 }
 
-const addNewQuestion = (p_id, name, email, body) => {
+const postQuestion = (p_id, name, email, body) => {
   return addQuestion(p_id, name, email, body)
+}
+
+const postAnswer = (q_id, body, name, email, photos) => {
+  return addAnswer(q_id, body, name, email, photos)
 }
 
 module.exports = {
   getAllQuestions,
-  addNewQuestion,
-  getAnswers
+  postQuestion,
+  getAnswers,
+  postAnswer
 }

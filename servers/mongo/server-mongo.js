@@ -25,7 +25,7 @@ app.get('/qa/questions', (req,res) => {
   })
   .catch(err => {
     console.log('error querying db', err)
-    res.send(500)
+    res.send(400)
   })
 })
 
@@ -40,6 +40,10 @@ app.get('/qa/questions/:question_id/answers', (req, res) => {
   db.getAnswers(q_id, page, count).then(data => {
     res.send(data)
   })
+  .catch(err => {
+    console.log('error getting answers', err)
+    res.send(400)
+  })
 })
 
 app.post('/qa/questions', (req,res) => {
@@ -50,13 +54,28 @@ app.post('/qa/questions', (req,res) => {
   let email = query.email;
   let p_id = query.product_id;
 
-  console.log('this is the query', query)
-
-  db.addNewQuestion(p_id, name, email, body)
+  db.postQuestion(p_id, name, email, body)
   .then(data => res.send(data))
 })
 
-// app.post('/qa/questions/[questionid]/answers')
+app.post('/qa/questions/:question_id/answers', (req, res) => {
+  let query = req.query;
+  let params = req.params
+console.log(params)
+  let q_id = Number(params.question_id)
+  let body = query.body;
+  let name = query.name
+  let email = query.email
+  let photos = query.photos.split('').filter(l => {
+    return (l !== '[' && l !== ']')
+  }).join('').split(',')
+
+
+  db.postAnswer(q_id, body, name, email, photos)
+  .then(data =>{
+    res.send(201)
+  })
+})
 
 // app.put('qa/questions/[questionid]/helpful')
 
