@@ -12,16 +12,12 @@ app.use(express.urlencoded({ extended: true }));
 ROUTES
 */
 
-app.get('/test', (req, res) => {
-  res.send('yes')
-})
 app.get('/qa/questions', (req,res) => {
   let query = req.query;
   console.log(query)
   let p_id = Number(query.product_id)
   let page = 1;
   let count = Number(query.count);
-console.log(p_id)
 
   db.getAllQuestions(p_id, page, count)
   .then(data => {
@@ -33,14 +29,18 @@ console.log(p_id)
   })
 })
 
+app.get('/qa/questions/:question_id/answers', (req, res) => {
+  let query = req.query;
+  let params = req.params
 
-//   //call function with req parameters send to db
-//     //parameters are product_id, page, count
-//   //ie getQuestions
+  let q_id = Number(params.question_id)
+  let page = Number(query.page)
+  let count = Number(query.count)
 
-// //})
-
-// app.get('/qa/questions/[questionid]/answers')
+  db.getAnswers(q_id, page, count).then(data => {
+    res.send(data)
+  })
+})
 
 app.post('/qa/questions', (req,res) => {
   let query = req.query;

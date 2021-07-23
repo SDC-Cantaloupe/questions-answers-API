@@ -2,7 +2,7 @@ const {Questions, Answers, Answer_Photos} = require('../models.js');
 const {formatResponse} = require('../controllers/questionResponse.js');
 
 async function getQuestionData(p_id, page, count) {
-  console.log('limit', count, 'p_id', p_id)
+
   let questions = await Questions.find({product_id:p_id, reported: false}, {_id: 0}).limit(count);
 
   let answers = await Promise.all(questions.map(async (question) => {
