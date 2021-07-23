@@ -5,10 +5,6 @@ const formatAnswerResponse = (q_id, page, count, answers, answerPhotos) => {
     count: count,
     results: []
   }
-  console.log(answerPhotos.length)
-  answerPhotos.map(photo => {
-    console.log(photo)
-  })
   answers.map((answer, i) => {
     let answerResult = {...answer}._doc;
     answerResult.id = answerResult.answer_id;
