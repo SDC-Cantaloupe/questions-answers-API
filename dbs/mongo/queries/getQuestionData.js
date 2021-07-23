@@ -3,10 +3,10 @@ const {formatResponse} = require('../controllers/questionResponse.js');
 
 async function getQuestionData(p_id, page, count) {
 
-  let questions = await Questions.find({product_id:p_id, reported: false}, {_id: 0}).limit(count);
+  let questions = await Questions.find({product_id:p_id, reported: 0}, {_id: 0}).limit(count);
 
   let answers = await Promise.all(questions.map(async (question) => {
-    let answer = await Answers.find({question_id: question.question_id, reported: false}, {_id: 0}).limit(count);
+    let answer = await Answers.find({question_id: question.question_id, reported: 0}, {_id: 0}).limit(count);
     return answer
   }))
 

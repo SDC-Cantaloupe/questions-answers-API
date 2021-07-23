@@ -77,13 +77,61 @@ console.log(params)
   })
 })
 
-// app.put('qa/questions/[questionid]/helpful')
+app.put('/qa/questions/:question_id/helpful', (req, res) => {
+  let params = req.params;
+console.log('got here')
+  let q_id = Number(params.question_id);
 
-// app.put('qa/questions/[questionid]/report')
+  db.markQuestionHelpful(q_id)
+  .then(() => {
+    res.status(204).send()
+  })
+  .catch(err => {
+    console.log('error', err)
+  })
+})
 
-// app.put('qa/answers/[answerid]/helpful')
+app.put('/qa/questions/:questionid/report', (req, res) => {
+  let params = req.params;
 
-// app.put('qa/answers/[answerid]/report')
+  let q_id = Number(params.question_id)
+
+  db.reportQuestion(q_id)
+  .then(() => {
+    res.status(204).send()
+  })
+  .catch(err => {
+    console.log('error', err)
+  })
+})
+
+app.put('/qa/answers/:answer_id/helpful', (req, res) => {
+  let params = req.params;
+
+  let a_id = Number(params.answer_id);
+
+  db.markAnswerHelpful(a_id)
+  .then(() => {
+    res.status(204).send()
+  })
+  .catch(err => {
+    console.log('error', err)
+  })
+})
+
+app.put('/qa/answers/:answer_id/report', (req, res) => {
+  let params = req.params;
+
+  let a_id = Number(params.answer_id);
+
+  db.reportAnswer(a_id)
+  .then(() => {
+    res.status(204).send()
+  })
+  .catch(err => {
+    console.log('error', err)
+  })
+})
 
 
 app.listen(PORT, () => {console.log(`Listening at ${PORT}`)})
