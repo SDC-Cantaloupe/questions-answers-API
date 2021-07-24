@@ -11,9 +11,6 @@ app.use(express.urlencoded({ extended: true }));
 /*
 ROUTES
 */
-app.get('/test', (req, res) => {
-  res.send('hey')
-})
 app.get('/qa/questions', (req,res) => {
   let query = req.query;
 

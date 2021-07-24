@@ -1,5 +1,5 @@
 const {Questions, Answers, Answer_Photos} = require('../dbs/mongo/models.js')
-const { setupDB } = require('../test-setup')
+const { setupDB } = require('../testHelpers/test-setup')
 
 setupDB('seed')
 

@@ -1,13 +1,4 @@
-const hasAllKeys = (obj, array) => {
-  let objKeys = Object.keys(obj);
-
-  for ( let i = 0; i < objKeys.length; i++) {
-    if (objKeys[i] !== array[i]) {
-      return false
-    }
-  }
-  return true
-}
+const {hasAllKeys} = require('./hasAllKeys.js')
 
 const checkQuestionResponseFormat = (response) => {
   const productKeys = ['product_id', 'results'];

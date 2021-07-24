@@ -2,7 +2,9 @@ const app = require('../servers/mongo/server-mongo.js');
 const supertest = require('supertest');
 const request = supertest(app);
 const {Questions, Answers, Answer_Photos} = require('../dbs/mongo/models.js')
-const { setupDB } = require('../test-setup')
+const { setupDB } = require('../testHelpers/test-setup')
+const {checkQuestionResponseFormat} = require('../testHelpers/checkQuestionFormat.js')
+const {checkAnswerResponseFormat} = require('../testHelpers/checkAnswerFormat.js')
 
 const util = require('util')
 
@@ -19,14 +21,29 @@ describe('Test API routes', () => {
         count: 5
       })
       .then(res => {
-        let test = JSON.parse(res.text)
-        console.log(util.inspect(test, {showHidden: false, depth: null}))
+        expect(res.status).toBe(200);
+        let data = JSON.parse(res.text)
+        expect(checkQuestionResponseFormat(data)).toBeTruthy()
+
       })
     })
-
   })
   describe('Get Answers', () => {
+    test('Returns answer data', async() => {
+      await request
+      .get('/qa/questions/1/answers')
+      .query({
+        question_id: 1,
+        count: 5
+      })
+      .then(res => {
+        expect(res.status).toBe(200)
+        let data = JSON.parse(res.text)
 
+        expect(checkAnswerResponseFormat(data)).toBeTruthy()
+
+      })
+    })
 
   })
   describe('Post Question', () => {
