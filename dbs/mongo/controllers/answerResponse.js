@@ -12,6 +12,10 @@ const formatAnswerResponse = (q_id, page, count, answers, answerPhotos) => {
     delete answerResult.answerer_email;
     delete answerResult.reported;
 
+    if (answerResult.__v >= 0) {
+      delete answerResult.__v
+    }
+
     answerResult.photos = answerPhotos[i]
 
     result.results.push(answerResult)

@@ -32,7 +32,12 @@ const postAnswer = (q_id, body, name, email, photos) => {
 }
 
 const markQuestionHelpful = (q_id) => {
-  return markQuestion(q_id, 'helpful')
+  try{
+    return markQuestion(q_id, 'helpful')
+  } catch(e) {
+    console.log(e)
+  }
+
 }
 
 const reportQuestion = (q_id) => {

@@ -28,7 +28,7 @@ const answerSchema = new mongoose.Schema({
   answerer_name: String,
   answerer_email: String,
   reported: Number,
-  hepfulness: Number
+  helpfulness: Number
 })
 
 const photoSchema = new mongoose.Schema({

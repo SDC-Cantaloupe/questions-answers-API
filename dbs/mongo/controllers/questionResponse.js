@@ -9,6 +9,11 @@ const formatResponse = (p_id, questionData, answerData, photoData) => {
 
     delete questionResult.product_id;
     delete questionResult.asker_email;
+    questionResult.reported = 'false';
+
+    if (questionResult.__v >= 0) {
+      delete questionResult.__v
+    }
 
     let answersObj = {};
 
@@ -19,6 +24,10 @@ const formatResponse = (p_id, questionData, answerData, photoData) => {
       delete answerResult.question_id;
       delete answerResult.answerer_email;
       delete answerResult.reported;
+
+      if (answerResult.__v >= 0) {
+        delete answerResult.__v
+      }
 
       answersObj[answerResult.id] = answerResult
     })

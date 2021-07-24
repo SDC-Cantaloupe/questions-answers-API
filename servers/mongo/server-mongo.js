@@ -102,6 +102,7 @@ app.post('/qa/questions/:question_id/answers', (req, res) => {
 
 app.put('/qa/questions/:question_id/helpful', (req, res) => {
   let params = req.params;
+  console.log(params)
 
   let q_id = Number(params.question_id);
 
@@ -114,7 +115,7 @@ app.put('/qa/questions/:question_id/helpful', (req, res) => {
   })
 })
 
-app.put('/qa/questions/:questionid/report', (req, res) => {
+app.put('/qa/questions/:question_id/report', (req, res) => {
   let params = req.params;
 
   let q_id = Number(params.question_id)

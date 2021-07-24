@@ -4,11 +4,25 @@ const request = supertest(app);
 const {Questions, Answers, Answer_Photos} = require('../dbs/mongo/models.js')
 const { setupDB } = require('../test-setup')
 
+const util = require('util')
+
+
 setupDB('apiTest');
 
 describe('Test API routes', () => {
   describe('Get Questions', () => {
-
+    test('Returns question data', async () => {
+      await request
+      .get('/qa/questions')
+      .query({
+        product_id: 1,
+        count: 5
+      })
+      .then(res => {
+        let test = JSON.parse(res.text)
+        console.log(util.inspect(test, {showHidden: false, depth: null}))
+      })
+    })
 
   })
   describe('Get Answers', () => {
@@ -73,18 +87,75 @@ describe('Test API routes', () => {
       expect(savedPhotos[0].url).toBe('www.google.com')
       expect(savedPhotos[1].url).toBe('www.yahoo.com')
 
-      // expect(savedAnswer).toBeTruthy()
-      // expect(savedAnswer[0].body).toBe('test')
-      // expect(savedAnswer[0].answerer_email).toBe('j@mail.com')
+      expect(savedAnswer).toBeTruthy()
+      expect(savedAnswer[0].body).toBe('test')
+      expect(savedAnswer[0].answerer_email).toBe('j@mail.com')
     })
 
   })
   describe('Mark Question', () => {
+    test('Marks Question Helpful', async () => {
+      let preMarkedHelpful;
+      let postMarkedHelpful;
 
+      await Questions.find({question_id: 1})
+      .then(res => {
+        preMarkedHelpful = res[0].question_helpfulness;
+      })
+
+      await request.put('/qa/questions/1/helpful')
+
+      await Questions.find({question_id: 1})
+      .then(res => {
+        postMarkedHelpful = res[0].question_helpfulness;
+      })
+
+      expect(postMarkedHelpful).toBe(preMarkedHelpful + 1)
+    })
+    test('Marks Question Reported', async () => {
+      let question = await Questions.find({question_id: 1});
+
+      await request.put('/qa/questions/1/report');
+
+      let reported = await Questions.find({question_id: 1});
+
+      expect(question[0].reported).toBe(0);
+      expect(reported[0].reported).toBe(1);
+
+    })
 
   })
   describe('Mark Answer', () => {
+    test('Marks Answer Helpful', async () => {
+      let preMarkedHelpful;
+      let postMarkedHelpful;
 
+      await Answers.find({answer_id: 5})
+      .then(res => {
+        console.log(res)
+        preMarkedHelpful = res[0].helpfulness;
+      })
+
+      await request.put('/qa/answers/5/helpful')
+
+      await Answers.find({answer_id: 5})
+      .then(res => {
+        postMarkedHelpful = res[0].helpfulness;
+      })
+
+      expect(postMarkedHelpful).toBe(preMarkedHelpful + 1)
+    })
+    test('Marks Answer Reported', async () => {
+      let answer= await Answers.find({answer_id: 5});
+
+      await request.put('/qa/answers/5/report');
+
+      let reported = await Answers.find({answer_id: 5});
+
+      expect(answer[0].reported).toBe(0);
+      expect(reported[0].reported).toBe(1);
+
+    })
 
   })
 })
