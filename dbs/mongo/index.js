@@ -8,11 +8,11 @@ const {markQuestion} = require('./queries/markQuestion.js')
 const {markAnswer} = require('./queries/markAnswer.js')
 
 
-mongoose.connect('mongodb://localhost/qa', {useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false});
+//mongoose.connect('mongodb://localhost/qa', {useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false});
 
-const db = mongoose.connection;
-db.on('error', console.error.bind(console, 'connection error:'))
-db.once('open', () => {console.log('Connnectedto QA DB')})
+// const db = mongoose.connection;
+// db.on('error', console.error.bind(console, 'connection error:'))
+// db.once('open', () => {console.log('Connnected to a MongoDB')})
 
 const getAllQuestions = (p_id, page = 1, count = 5) => {
   console.log('db index', p_id, page, count)
