@@ -69,14 +69,27 @@ app.post('/qa/questions/:question_id/answers', (req, res) => {
   let query = req.query;
   let params = req.params
 
-  let q_id = Number(params.question_id)
+  let q_id = Number(params.question_id);
   let body = query.body;
-  let name = query.name
-  let email = query.email
-  let photos = query.photos.split('').filter(l => {
-    return (l !== '[' && l !== ']')
-  }).join('').split(',')
+  let name = query.name;
+  let email = query.email;
+  let photos = query.photos || []
 
+  if(typeof query.photos === 'string') {
+    try {
+      photos = query.photos.split('').filter(l => {
+        return (l !== '[' && l !== ']')
+      }).join('').split(',')
+
+      console.log('photos', photos)
+
+      if (!photos) {
+        throw new Error('Incompatible data type for photos')
+      }
+    } catch (e) {
+      console.error(e)
+    }
+  }
 
   db.postAnswer(q_id, body, name, email, photos)
   .then(data =>{

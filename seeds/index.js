@@ -8,11 +8,9 @@ const mongoose = require('mongoose')
 async function seedDatabase () {
   const dir = await readDir(__dirname)
   const seedFiles = dir.filter(f => f.endsWith('.seed.js'))
-  console.log(seedFiles)
 
   for (const file of seedFiles) {
     const fileName = file.split('.seed.js')[0]
-    console.log(fileName)
     let modelName = '';
 
     if (fileName === 'questions') {

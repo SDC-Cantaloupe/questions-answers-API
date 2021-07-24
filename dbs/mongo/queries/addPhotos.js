@@ -12,9 +12,9 @@ async function addAnswerPhoto(answerId, url){
     answer_id: answerId,
     url: url
   })
-  console.log(doc)
-  //await doc.save()
-  console.log('photo saved')
+
+  await doc.save()
+
 }
 
 module.exports = {
