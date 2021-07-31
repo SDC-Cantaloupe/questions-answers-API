@@ -13,7 +13,6 @@ ROUTES
 */
 app.get('/qa/questions', (req,res) => {
   let query = req.query;
-  console.log('query', query)
   let p_id = Number(query.product_id)
   let page = 1;
   let count = Number(query.count);
@@ -99,7 +98,6 @@ app.post('/qa/questions/:question_id/answers', (req, res) => {
 
 app.put('/qa/questions/:question_id/helpful', (req, res) => {
   let params = req.params;
-  console.log(params)
 
   let q_id = Number(params.question_id);
 

@@ -1,5 +1,6 @@
 const app = require('../servers/mongo/server-mongo.js');
 const supertest = require('supertest');
+const {performance} = require('perf_hooks')
 const request = supertest(app);
 const {Questions, Answers, Answer_Photos} = require('../dbs/mongo/models.js')
 const { setupDB } = require('../testHelpers/test-setup')
@@ -26,6 +27,20 @@ describe('Test API routes', () => {
         expect(checkQuestionResponseFormat(data)).toBeTruthy()
 
       })
+    })
+    test('Executes in under 50ms', async() => {
+      let startTime = performance.now();
+      await request
+      .get('/qa/questions')
+      .query({
+        product_id: 5,
+        count: 5
+      })
+      .then(res => {
+        let endTime = performance.now();
+        expect(endTime - startTime).toBeLessThan(20)
+      })
+      .catch(err => console.log('error with request to server', err))
     })
   })
   describe('Get Answers', () => {
@@ -149,7 +164,6 @@ describe('Test API routes', () => {
 
       await Answers.find({answer_id: 5})
       .then(res => {
-        console.log(res)
         preMarkedHelpful = res[0].helpfulness;
       })
 
