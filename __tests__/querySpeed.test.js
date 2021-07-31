@@ -6,12 +6,12 @@ const {Questions, Answers, Answer_Photos} = require('../dbs/mongo/models.js')
 const mongoose = require('mongoose')
 
 
-beforeAll(async () => {
+beforeEach(async () => {
   const url = `mongodb://127.0.0.1/qa`
   await mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true })
 })
 
-afterAll(async () => {
+afterEach(async () => {
   await mongoose.connection.close()
 })
 
