@@ -9,7 +9,7 @@ const mongoose = require('mongoose');
 
 const questionSchema = new mongoose.Schema({
   //id	product_id	body	date_written	asker_name	asker_email	reported	helpful
-  question_id: Number,
+  question_id: {type: Number, index: true},
   product_id: Number,
   question_body: String,
   question_date: String,
@@ -22,7 +22,7 @@ const questionSchema = new mongoose.Schema({
 const answerSchema = new mongoose.Schema({
   //id	question_id	body	date_written	answerer_name	answerer_email	reported	helpful
   answer_id: Number,
-  question_id: Number,
+  question_id: {type: Number, index: true},
   body: String,
   date: String,
   answerer_name: String,
@@ -34,7 +34,7 @@ const answerSchema = new mongoose.Schema({
 const photoSchema = new mongoose.Schema({
   // id answer_id url
   photo_id: Number,
-  answer_id: Number,
+  answer_id: {type: Number, index: true},
   url: String
 })
 

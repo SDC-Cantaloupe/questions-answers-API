@@ -13,7 +13,7 @@ ROUTES
 */
 app.get('/qa/questions', (req,res) => {
   let query = req.query;
-
+  console.log('query', query)
   let p_id = Number(query.product_id)
   let page = 1;
   let count = Number(query.count);
