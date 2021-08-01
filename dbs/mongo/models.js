@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const mongoosePaginate = require('mongoose-paginate-v2')
 
 
 
@@ -37,6 +38,10 @@ const photoSchema = new mongoose.Schema({
   answer_id: {type: Number, index: true},
   url: String
 })
+
+questionSchema.plugin(mongoosePaginate);
+answerSchema.plugin(mongoosePaginate);
+photoSchema.plugin(mongoosePaginate);
 
 
 const Questions = mongoose.model('Questions', questionSchema, 'questions');

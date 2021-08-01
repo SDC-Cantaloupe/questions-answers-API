@@ -14,7 +14,7 @@ ROUTES
 app.get('/qa/questions', (req,res) => {
   let query = req.query;
   let p_id = Number(query.product_id)
-  let page = 1;
+  let page = Number(query.page);
   let count = Number(query.count);
 
   db.getAllQuestions(p_id, page, count)

@@ -26,6 +26,7 @@ test('Connects to db', async () => {
 describe('Read queries under 50ms response time', () => {
   test('GET questions responds in under 50ms', async () => {
     let startTime = performance.now();
+    let endTime;
     await request
       .get('/qa/questions')
       .query({
@@ -33,16 +34,20 @@ describe('Read queries under 50ms response time', () => {
         count: 5
       })
       .then(res => {
-        let endTime = performance.now();
-        let executionTime = Math.floor(endTime - startTime)
-
-        console.log(`GET Questions call took ${executionTime} milliseconds`)
-        expect(executionTime).toBeLessThan(50)
+        endTime = performance.now();
       })
       .catch(err => console.log('error querying db', err))
+
+
+    let executionTime = Math.floor(endTime - startTime)
+
+    console.log(`GET Questions call took ${executionTime} milliseconds`)
+
+    expect(executionTime).toBeLessThan(50)
   })
   test('GET Answers responds in under 50ms', async () => {
     let startTime = performance.now();
+    let endTime;
     await request
       .get('/qa/questions/3518962/answers')
       .query({
@@ -50,13 +55,14 @@ describe('Read queries under 50ms response time', () => {
         count: 5
       })
       .then(res => {
-        let endTime = performance.now();
-        let executionTime = Math.floor(endTime - startTime)
-
-        console.log(`GET Answers call took ${executionTime} milliseconds`)
-
-        expect(executionTime).toBeLessThan(50)
+        endTime = performance.now();
       })
       .catch(err => console.log('error querying answer collection', err))
+
+    let executionTime = Math.floor(endTime - startTime)
+
+    console.log(`GET Answers call took ${executionTime} milliseconds`)
+
+    expect(executionTime).toBeLessThan(50)
   })
 })
