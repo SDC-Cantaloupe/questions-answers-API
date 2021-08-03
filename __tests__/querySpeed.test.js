@@ -6,12 +6,12 @@ const {Questions, Answers, Answer_Photos} = require('../dbs/mongo/models.js')
 const mongoose = require('mongoose')
 
 
-beforeEach(async () => {
+beforeAll(async () => {
   const url = `mongodb://127.0.0.1/qa`
   await mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true })
 })
 
-afterEach(async () => {
+afterAll(async () => {
   await mongoose.connection.close()
 })
 
@@ -37,6 +37,8 @@ describe('Read queries under 50ms response time', () => {
         endTime = performance.now();
       })
       .catch(err => console.log('error querying db', err))
+
+      console.log(startTime, endTime, performance.now())
 
 
     let executionTime = Math.floor(endTime - startTime)
