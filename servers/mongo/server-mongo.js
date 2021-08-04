@@ -77,8 +77,6 @@ app.post('/qa/questions/:question_id/answers', (req, res) => {
         return (l !== '[' && l !== ']')
       }).join('').split(',')
 
-      console.log('photos', photos)
-
       if (!photos) {
         throw new Error('Incompatible data type for photos')
       }
@@ -86,7 +84,6 @@ app.post('/qa/questions/:question_id/answers', (req, res) => {
       console.error(e)
     }
   }
-
   db.postAnswer(q_id, body, name, email, photos)
   .then(data =>{
     res.status(201).send(data)
@@ -98,7 +95,7 @@ app.post('/qa/questions/:question_id/answers', (req, res) => {
 
 app.put('/qa/questions/:question_id/helpful', (req, res) => {
   let params = req.params;
-
+console.log('hey')
   let q_id = Number(params.question_id);
 
   db.markQuestionHelpful(q_id)

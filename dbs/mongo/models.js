@@ -10,8 +10,8 @@ const mongoosePaginate = require('mongoose-paginate-v2')
 
 const questionSchema = new mongoose.Schema({
   //id	product_id	body	date_written	asker_name	asker_email	reported	helpful
-  question_id: {type: Number, index: true},
-  product_id: Number,
+  question_id: Number,
+  product_id: {type: Number, index: true},
   question_body: String,
   question_date: String,
   asker_name: String,

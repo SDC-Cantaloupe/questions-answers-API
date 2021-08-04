@@ -20,7 +20,7 @@ async function addQuestion(p_id, name, email, body){
   //console.log('Document saved',document)
 
   await doc.save()
-  return `saved document`
+  return doc
 }
 
 module.exports = {
