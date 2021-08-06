@@ -8,3 +8,4 @@ mongoose.connect('mongodb://localhost/qaStress', {useNewUrlParser: true, useUnif
 const PORT = 3001;
 
 app.listen(PORT, () => {console.log(`Listening at ${PORT}`)})
+
