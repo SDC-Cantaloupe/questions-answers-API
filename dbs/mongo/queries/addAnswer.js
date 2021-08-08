@@ -23,6 +23,8 @@ async function addAnswer(q_id, body, name, email, photos){
     helpfulness: 0
   })
   await doc.save()
+
+  return doc
 }
 
 module.exports = {

@@ -32,7 +32,7 @@ const postAnswer = (q_id, body, name, email, photos) => {
 
 const markQuestionHelpful = (q_id) => {
   try{
-    return markQuestion(q_id, 'helpful')
+    markQuestion(q_id, 'helpful')
   } catch(e) {
     console.log(e)
   }
@@ -40,15 +40,27 @@ const markQuestionHelpful = (q_id) => {
 }
 
 const reportQuestion = (q_id) => {
-  return markQuestion(q_id, 'reported')
+  try {
+    markQuestion(q_id, 'reported')
+  } catch(e) {
+    console.log(e)
+  }
 }
 
 const markAnswerHelpful = (a_id) => {
-  return markAnswer(a_id, 'helpful')
+  try {
+    markAnswer(a_id, 'helpful')
+  } catch (e) {
+    console.log(e)
+  }
 }
 
 const reportAnswer = (a_id) => {
-  return markAnswer(a_id, 'reported')
+  try {
+    markAnswer(a_id, 'reported')
+  } catch (e) {
+    console.log(e)
+  }
 }
 
 module.exports = {

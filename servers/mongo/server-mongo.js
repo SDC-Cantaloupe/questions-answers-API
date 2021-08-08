@@ -23,7 +23,7 @@ app.get('/qa/questions', (req,res) => {
   })
   .catch(err => {
     console.log('error querying db', err)
-    res.status(400).send(typeof err)
+    res.status(400).send(err)
   })
 })
 
@@ -35,12 +35,13 @@ app.get('/qa/questions/:question_id/answers', (req, res) => {
   let page = Number(query.page)
   let count = Number(query.count)
 
-  db.getAnswers(q_id, page, count).then(data => {
+  db.getAnswers(q_id, page, count)
+  .then(data => {
     res.status(200).send(data)
   })
   .catch(err => {
     console.log('error getting answers', err)
-    res.send(400)
+    res.status(400).send(err)
   })
 })
 
@@ -57,7 +58,7 @@ app.post('/qa/questions', (req,res) => {
     res.status(201).send(data)
   })
   .catch(err => {
-    console.log('error posting questions', err)
+    res.status(400).send('could not post question')
   })
 })
 
@@ -77,28 +78,26 @@ app.post('/qa/questions/:question_id/answers', (req, res) => {
         return (l !== '[' && l !== ']')
       }).join('').split(',')
 
-      console.log('photos', photos)
-
       if (!photos) {
         throw new Error('Incompatible data type for photos')
       }
     } catch (e) {
       console.error(e)
+      res.status(400).send(e)
     }
   }
-
   db.postAnswer(q_id, body, name, email, photos)
   .then(data =>{
     res.status(201).send(data)
   })
   .catch(err => {
     console.log('error posting answer', err)
+    res.status(400).send(err)
   })
 })
 
 app.put('/qa/questions/:question_id/helpful', (req, res) => {
   let params = req.params;
-
   let q_id = Number(params.question_id);
 
   db.markQuestionHelpful(q_id)
@@ -107,6 +106,7 @@ app.put('/qa/questions/:question_id/helpful', (req, res) => {
   })
   .catch(err => {
     console.log('error marking question helpful', err)
+    res.status(400).send(err)
   })
 })
 
@@ -121,6 +121,7 @@ app.put('/qa/questions/:question_id/report', (req, res) => {
   })
   .catch(err => {
     console.log('error marking question reported', err)
+    res.status(400).send(err)
   })
 })
 
@@ -135,6 +136,7 @@ app.put('/qa/answers/:answer_id/helpful', (req, res) => {
   })
   .catch(err => {
     console.log('error marking answer helpful', err)
+    res.status(400).send(err)
   })
 })
 
@@ -149,6 +151,7 @@ app.put('/qa/answers/:answer_id/report', (req, res) => {
   })
   .catch(err => {
     console.log('error marking answer reported', err)
+    res.status(400).send(err)
   })
 })
 
