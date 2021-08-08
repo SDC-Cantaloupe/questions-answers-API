@@ -2,12 +2,12 @@ const {Questions} = require('../models.js');
 
 async function addQuestion(p_id, name, email, body){
 
-  //let findHighestQ_ID = await Questions.find().sort({question_id: -1}).limit(1);
+  let findHighestQ_ID = await Questions.find().sort({question_id: -1}).limit(1);
 
- // let q_id =  findHighestQ_ID[0].question_id + 1;
+ let q_id =  findHighestQ_ID[0].question_id + 1;
 
   let doc = new Questions({
-    question_id: 1,
+    question_id: q_id,
     product_id: p_id,
     question_body: body,
     question_date: new Date().toISOString(),
