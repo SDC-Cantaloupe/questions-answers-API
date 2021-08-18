@@ -49,6 +49,10 @@ const cache = (req, res, next) => {
 ROUTES
 */
 
+router.get('/loaderio-9fcc97893f6b4872db03952890a60a81', (req, res) => {
+  res.send('loaderio-9fcc97893f6b4872db03952890a60a81')
+})
+
 router.get('/qa/questions', cache, (req,res) => {
   let query = req.query;
   let p_id = Number(query.product_id)
