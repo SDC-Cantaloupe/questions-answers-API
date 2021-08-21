@@ -1,7 +1,6 @@
 const app = require('../servers/mongo/server-mongo.js');
 const supertest = require('supertest');
 const {performance} = require('perf_hooks');
-const redis = require('redis');
 const request = supertest(app);
 const {Questions, Answers, Answer_Photos} = require('../dbs/mongo/models.js')
 const mongoose = require('mongoose')

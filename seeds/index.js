@@ -7,6 +7,7 @@ const mongoose = require('mongoose')
 // Load seeds of all models
 async function seedDatabase () {
   const dir = await readDir(__dirname)
+  console.log('direcoty name', dir)
   const seedFiles = dir.filter(f => f.endsWith('.seed.js'))
 
   for (const file of seedFiles) {
