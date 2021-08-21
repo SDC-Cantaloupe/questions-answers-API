@@ -9,13 +9,16 @@ CACHE MIDDLEWARE
 */
 
 const cache = (req, res, next) => {
-  let query = req.query;
-  let params = req.params;
-  let p_id = Number(query.product_id);
-  let q_id = Number(params.question_id);
+  const query = req.query;
+  const params = req.params;
+  const p_id = Number(query.product_id);
+  const q_id = Number(params.question_id);
+  const page = Number(query.page);
+  const count = Number(query.count);
 
   if (p_id) {
-    let key = `PID ${p_id}`
+
+    const key = `PID ${p_id}-${page}-${count}`
 
     client.get(key, (err, data) => {
       if (err) throw err;
@@ -30,7 +33,8 @@ const cache = (req, res, next) => {
   }
 
   if (q_id) {
-    let key = `QID ${q_id}`;
+
+    const key = `QID ${q_id}-${page}-${count}`;
 
     client.get(key, (err, data) => {
       if (err) throw err;
@@ -61,7 +65,7 @@ router.get('/qa/questions', cache, (req,res) => {
 
   db.getAllQuestions(p_id, page, count)
   .then(data => {
-    let key = `PID ${p_id}`
+    let key = `PID ${p_id}-${page}-${count}`
     client.setex(key, 1000, JSON.stringify(data))
     res.status(200).send(data)
   })
@@ -81,7 +85,7 @@ router.get('/qa/questions/:question_id/answers', cache, (req, res) => {
 
   db.getAnswers(q_id, page, count)
   .then(data => {
-    let key = `QID ${q_id}`;
+    let key = `QID ${q_id}-${page}-${count}`;
     client.setex(key, 1000, JSON.stringify(data))
     res.status(200).send(data)
   })

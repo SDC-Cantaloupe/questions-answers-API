@@ -1,6 +1,7 @@
 const app = require('../servers/mongo/server-mongo.js');
 const supertest = require('supertest');
-const {performance} = require('perf_hooks')
+const {performance} = require('perf_hooks');
+const redis = require('redis');
 const request = supertest(app);
 const {Questions, Answers, Answer_Photos} = require('../dbs/mongo/models.js')
 const mongoose = require('mongoose')
@@ -8,7 +9,7 @@ const mongoose = require('mongoose')
 
 beforeEach(async () => {
   const url = `mongodb://127.0.0.1/qa`
-  await mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true })
+  await mongoose.connect(url, {useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false, autoIndex: false})
 })
 
 afterEach(async () => {
@@ -21,6 +22,7 @@ test('Connects to db', async () => {
     expect(res).toBeTruthy()
     expect(res[0].question_body).toBe('What fabric is the top made of?')
   })
+  .catch(err => console.log('SOMETHINGS WRONGSSSSS'))
 })
 
 describe('Paginates results', () => {
